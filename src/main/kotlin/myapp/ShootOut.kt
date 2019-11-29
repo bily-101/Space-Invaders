@@ -1,7 +1,17 @@
 package myapp
 import com.anysolo.toyGraphics.*
 import kotlin.random.Random
-
+/*
+*Made by bily
+* Left key to go left
+* right key to go right
+* space to shoot
+* Have fun
+*
+*
+*
+*
+*  */
 fun main () {
     var wnd = Window(1000, 1000, buffered = true, background = Pal16.blue)
     val keyboard = Keyboard(wnd)
