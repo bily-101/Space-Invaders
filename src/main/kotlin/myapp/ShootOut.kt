@@ -7,10 +7,6 @@ import kotlin.random.Random
 * right key to go right
 * space to shoot
 * Have fun
-*
-*ffn
-*
-*
 *  */
 fun main () {
     var wnd = Window(1000, 1000, buffered = true, background = Pal16.blue)
