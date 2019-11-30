@@ -54,15 +54,8 @@ fun main () {
                 }
 
                 KeyCodes.RIGHT -> {
-
                     x+=10
-
-                    rx += if (stop) {
-                        0
-                    }else{
-                        10
-                    }
-
+                    rx += if (stop) 0 else 10
                 }
 
                 KeyCodes.SPACE -> {
