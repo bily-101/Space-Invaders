@@ -54,12 +54,18 @@ fun main () {
             when (key.code) {
                 KeyCodes.LEFT -> {
                     tankX-=10
-                    if(!stop) bulletX -= 10
+                    if(stop) bulletX -= 0 else bulletX -= 10
                 }
 
                 KeyCodes.RIGHT -> {
-                    tankX=10
-                    bulletX += if (stop) 0 else 10
+                    tankX+=10
+
+                    if (stop) {
+                        bulletX -=0
+                    } else {
+                        bulletX += 10
+                    }
+
                 }
 
                 KeyCodes.SPACE -> {
@@ -69,7 +75,7 @@ fun main () {
 
                 'R'.toInt() -> {
                     bulletX = tankX
-                    blockY = tankY
+                    bulletY = tankY
                     bulletSpeed = 0
                     stop = false
                 }
@@ -85,10 +91,10 @@ fun main () {
         if (tankX<=0)
             tankX = wnd.width-1
 
-        if (bulletX<=-0)
+        if (bulletX<=1)
             bulletX = wnd.width-1
 
-        bulletX -= bulletSpeed
+        bulletY -= bulletSpeed
 
         gc.drawRect(blockX, blockY,40,20, fill = true)
         blockY += blockSpeed + 10
