@@ -118,7 +118,7 @@ fun main () {
         //bullet stop when reaches the top
         if (bulletY<=20) {
             bulletY= tankY
-            stop=false
+            stop = false
             bulletX = tankX
             bulletSpeed = 0
         }
