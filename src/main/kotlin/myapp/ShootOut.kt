@@ -121,8 +121,8 @@ fun main () {
         gc.drawText(20,300,"Score: $score")
 
         if (
-            blockX + 40 <= bulletX &&
-            blockY - 40 >= bulletX &&
+            blockX - 40 <= bulletX &&
+            blockY + 40 >= bulletX &&
             blockY - 20 <= bulletY &&
             blockY + 20 >= bulletY
         ) {
