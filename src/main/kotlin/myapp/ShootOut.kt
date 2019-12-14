@@ -1,25 +1,26 @@
 package myapp
 import com.anysolo.toyGraphics.*
 import kotlin.random.Random
+
 /*
-*Made by bily
+* Author: bily 2019
 * Left key to go left
 * right key to go right
 * space to shoot
 * Have fun
-*  */
+*/
+
 fun main () {
-    var wnd = Window(1000, 1000, buffered = true, background = Pal16.blue)
+    val wnd = Window(1000, 700, buffered = true, background = Pal16.blue)
     val keyboard = Keyboard(wnd)
 
-    var ax =  Random.nextInt(30, 500)
-    var ay = 40
+    var enemyBlockX =  Random.nextInt(30, 500)
+    var enemyBlockY = 40
 
-    var x = 365
-    var y = 665
-    var color = 0
-    var rx = x
-    var ry = y
+    var tankX = 365
+    val tankY = 665
+    var bulletX = tankX
+    var bulletY = tankY
     var bulletSpeed = 0
     var stop = false
     var blockSpeed = 0
@@ -28,34 +29,37 @@ fun main () {
     while (true) {
         val gc = Graphics(wnd)
         gc.clear()
-        gc.color = Pal16[color]
+        gc.color = Pal16.black
 
         if (score in 5..10) {
-            blockSpeed = 15
+            blockSpeed = 12
             gc.color = Pal16.brightYellow
-            gc.drawRect(wnd.height,wnd.width,wnd.height,wnd.width)
+            gc.drawRect(wnd.height, wnd.width, wnd.height, wnd.width, fill = true)
         }
-        if (score>=10) {
-            blockSpeed = 18
+
+        if (score >= 10) {
+            blockSpeed = 15
             gc.color = Pal16.darkGray
-            gc.drawRect(wnd.height,wnd.width,wnd.height,wnd.width)
+            gc.drawRect(wnd.height, wnd.width, wnd.height, wnd.width)
         }
+
         // Key codes
         while (true) {
             val key = keyboard.getPressedKey() ?: break
+
             when (key.code) {
                 KeyCodes.LEFT -> {
-                    x-=10
-                    if (stop) {
-                        rx += 0
-                    }else{
-                        rx-=10
-                    }
+                    tankX -= 10
+
+                    if(!stop)
+                        bulletX -= 10
                 }
 
                 KeyCodes.RIGHT -> {
-                    x+=10
-                    rx += if (stop) 0 else 10
+                    tankX+=10
+
+                    if(!stop)
+                        bulletX += 10
                 }
 
                 KeyCodes.SPACE -> {
@@ -64,70 +68,74 @@ fun main () {
                 }
 
                 'R'.toInt() -> {
-                    rx = x
-                    ry = y
+                    bulletX = tankX
+                    bulletY = tankY
                     bulletSpeed = 0
                     stop = false
                 }
             }
         }
-        if (x>=699)
-            x = 2
 
-        if (rx>=699)
-            rx=2
+        if (tankX >= wnd.width-1)
+            tankX = 2
 
-        if (x<=1)
-            x = 688
+        if (bulletX >= wnd.width-1)
+            bulletX = 2
 
-        if (rx<=1)
-            rx = 688
+        if (tankX <= 0)
+            tankX = wnd.width-1
 
-        ry -= bulletSpeed
+        if (bulletX <= 1)
+            bulletX = wnd.width-1
 
-        gc.drawRect(ax,ay,40,20,fill = true)
-        ay+=blockSpeed+10
+        bulletY -= bulletSpeed
 
-        if(ay<=5) {
-            ay = 20
-            ax = Random.nextInt(8, 500)
-            blockSpeed =  + 1
+        gc.drawRect(enemyBlockX, enemyBlockY,40,20, fill = true)
+        enemyBlockY += blockSpeed + 10
+
+        if(enemyBlockY <= 5) {
+            enemyBlockY = 20
+            enemyBlockX = Random.nextInt(8, 500)
+            blockSpeed += 1
         }
 
         //Tank 1
-        if (ay>=700) {
+        if (enemyBlockY >= wnd.height)
             break
-        }
+
         //TANK
         gc.color = Pal16.brightRed
-        gc.drawRect(x,y,34,34,fill = true)
+        gc.drawRect(tankX,tankY,34,34,fill = true)
+
         //bullet
         gc.color = Pal16.green
-        gc.drawRect(rx,ry,14,24,fill = true)
+        gc.drawRect(bulletX,bulletY,14,24,fill = true)
+
         //bullet stop when reaches the top
-        if (ry<=20) {
-            ry = y
-            stop=false
-            rx = x
+        if (bulletY<=20) {
+            bulletY= tankY
+            stop = false
+            bulletX = tankX
             bulletSpeed = 0
         }
-        //SCORE BOARD
+
+        // Score board
         gc.drawText(20,300,"Score: $score")
 
-        if (ax-35<=rx && ax+35>=rx && ay-20<=ry && ay+20>=ry) {
-            score+=1
-            ay = -10
+        if (
+            enemyBlockX - 40 <= bulletX &&
+            enemyBlockY + 40 >= bulletX &&
+            enemyBlockY - 20 <= bulletY &&
+            enemyBlockY + 20 >= bulletY
+        ) {
+            score += 1
+            enemyBlockY = -10
         }
 
+        if (score>=5 && enemyBlockY<=5)
+            enemyBlockX = Random.nextInt(8, 500)
 
-        if (score>=5 && ay<=5)
-            ax = Random.nextInt(8, 500)
-
-        if (blockSpeed==-25 && ay<=0) {
-            blockSpeed = 0
-            blockSpeed += 8
-        }
-        //END
+        // End of the frame
         gc.close()
         sleep (ms = 80)
     }
