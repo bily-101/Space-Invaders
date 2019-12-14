@@ -11,13 +11,11 @@ import kotlin.random.Random
 */
 
 fun main () {
-    // The Window
     var wnd = Window(1000, 700, buffered = true, background = Pal16.blue)
-    // The Keyboard Variable
     val keyboard = Keyboard(wnd)
-    //enemy block X and Y
-    var blockX =  Random.nextInt(30, 500)
-    var blockY = 40
+
+    var enemyBlockX =  Random.nextInt(30, 500)
+    var enemyBlockY = 40
 
     var tankX = 365
     var tankY = 665
@@ -37,13 +35,13 @@ fun main () {
         if (score in 5..10) {
             blockSpeed = 12
             gc.color = Pal16.brightYellow
-            gc.drawRect(wnd.height,wnd.width,wnd.height,wnd.width, fill = true)
+            gc.drawRect(wnd.height, wnd.width, wnd.height, wnd.width, fill = true)
         }
 
         if (score >= 10) {
             blockSpeed = 15
             gc.color = Pal16.darkGray
-            gc.drawRect(wnd.height,wnd.width,wnd.height,wnd.width)
+            gc.drawRect(wnd.height, wnd.width, wnd.height, wnd.width)
         }
 
         // Key codes
@@ -53,7 +51,9 @@ fun main () {
             when (key.code) {
                 KeyCodes.LEFT -> {
                     tankX -= 10
-                    bulletX -= if(stop) 0 else 10
+
+                    if(!stop)
+                        bulletX -= 10
                 }
 
                 KeyCodes.RIGHT -> {
@@ -91,25 +91,27 @@ fun main () {
 
         bulletY -= bulletSpeed
 
-        gc.drawRect(blockX, blockY,40,20, fill = true)
-        blockY += blockSpeed + 10
+        gc.drawRect(enemyBlockX, enemyBlockY,40,20, fill = true)
+        enemyBlockY += blockSpeed + 10
 
-        if(blockY <= 5) {
-            blockY = 20
-            blockX = Random.nextInt(8, 500)
+        if(enemyBlockY <= 5) {
+            enemyBlockY = 20
+            enemyBlockX = Random.nextInt(8, 500)
             blockSpeed += 1
         }
 
         //Tank 1
-        if (blockY >= wnd.height)
+        if (enemyBlockY >= wnd.height)
             break
 
         //TANK
         gc.color = Pal16.brightRed
         gc.drawRect(tankX,tankY,34,34,fill = true)
+
         //bullet
         gc.color = Pal16.green
         gc.drawRect(bulletX,bulletY,14,24,fill = true)
+
         //bullet stop when reaches the top
         if (bulletY<=20) {
             bulletY= tankY
@@ -117,23 +119,24 @@ fun main () {
             bulletX = tankX
             bulletSpeed = 0
         }
-        //SCORE BOARD
+
+        // Score board
         gc.drawText(20,300,"Score: $score")
 
         if (
-            blockX - 40 <= bulletX &&
-            blockY + 40 >= bulletX &&
-            blockY - 20 <= bulletY &&
-            blockY + 20 >= bulletY
+            enemyBlockX - 40 <= bulletX &&
+            enemyBlockY + 40 >= bulletX &&
+            enemyBlockY - 20 <= bulletY &&
+            enemyBlockY + 20 >= bulletY
         ) {
             score += 1
-            blockY = -10
+            enemyBlockY = -10
         }
 
-        if (score>=5 && blockY<=5)
-            blockX = Random.nextInt(8, 500)
+        if (score>=5 && enemyBlockY<=5)
+            enemyBlockX = Random.nextInt(8, 500)
 
-        //END
+        // End of the frame
         gc.close()
         sleep (ms = 80)
     }
