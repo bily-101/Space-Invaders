@@ -11,15 +11,14 @@ import kotlin.random.Random
 */
 
 fun main () {
-    var wnd = Window(1000, 700, buffered = true, background = Pal16.blue)
+    val wnd = Window(1000, 700, buffered = true, background = Pal16.blue)
     val keyboard = Keyboard(wnd)
 
     var enemyBlockX =  Random.nextInt(30, 500)
     var enemyBlockY = 40
 
     var tankX = 365
-    var tankY = 665
-    var color = 0
+    val tankY = 665
     var bulletX = tankX
     var bulletY = tankY
     var bulletSpeed = 0
@@ -30,7 +29,7 @@ fun main () {
     while (true) {
         val gc = Graphics(wnd)
         gc.clear()
-        gc.color = Pal16[color]
+        gc.color = Pal16.black
 
         if (score in 5..10) {
             blockSpeed = 12
