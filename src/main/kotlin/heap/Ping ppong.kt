@@ -4,6 +4,10 @@ import com.anysolo.toyGraphics.*
 import kotlin.random.Random
 
 
+private fun drawEnemy(gc: Graphics, x: Int, y: Int) {
+    gc.drawRect(x, y,15,15)
+}
+
 fun main () {
     val wnd = Window(800, 700, buffered = true)
     var color = 0
@@ -40,8 +44,6 @@ fun main () {
         if (boxX>=wnd.width)
             boxX = 1
 
-
-
         //Key binds
 
         gc.drawRect(Ex,Ey,15,15)
@@ -71,6 +73,7 @@ fun main () {
             Rspeed = -8
             score +=1
         }
+
         if (Ey<=1) {
             Ex = Random.nextInt(200, 600)
             Espeed = 0
@@ -87,29 +90,13 @@ fun main () {
 
         gc.drawText(20,200,"Score:$score")
 
-        fun enemy () {
-            gc.drawRect(Ex,Ey,15,15)
-            Ey+=Espeed+Random.nextInt(1,5)
-
-
-        }
-        enemy()
-
-
-        fun enemyNum2 () {
-            gc.color = Pal16.blue
-            gc.drawRect(Rx,Ry,15,15,fill = true)
-
-        }
+        drawEnemy(gc, Ex, Ey)
 
         if (score >= 5) {
-            enemyNum2()
-            Ry += Rspeed + 1 + 1/2
+
         }
         //end
         gc.close()
         sleep(10)
         }
-
-
     }

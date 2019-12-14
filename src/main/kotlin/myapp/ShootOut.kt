@@ -3,8 +3,7 @@ import com.anysolo.toyGraphics.*
 import kotlin.random.Random
 
 /*
-* (C) Copyright Vasiliy Lawing 2019
-*
+* Author: bily 2019
 * Left key to go left
 * right key to go right
 * space to shoot
@@ -38,7 +37,7 @@ fun main () {
         if (score in 5..10) {
             blockSpeed = 12
             gc.color = Pal16.brightYellow
-            gc.drawRect(wnd.height,wnd.width,wnd.height,wnd.width)
+            gc.drawRect(wnd.height,wnd.width,wnd.height,wnd.width, fill = true)
         }
 
         if (score >= 10) {
@@ -53,19 +52,15 @@ fun main () {
 
             when (key.code) {
                 KeyCodes.LEFT -> {
-                    tankX-=10
-                    if(stop) bulletX -= 0 else bulletX -= 10
+                    tankX -= 10
+                    bulletX -= if(stop) 0 else 10
                 }
 
                 KeyCodes.RIGHT -> {
                     tankX+=10
 
-                    if (stop) {
-                        bulletX -=0
-                    } else {
+                    if(!stop)
                         bulletX += 10
-                    }
-
                 }
 
                 KeyCodes.SPACE -> {
@@ -82,16 +77,16 @@ fun main () {
             }
         }
 
-        if (tankX>=wnd.width-1)
+        if (tankX >= wnd.width-1)
             tankX = 2
 
-        if (bulletX>=wnd.width-1)
-            bulletX=2
+        if (bulletX >= wnd.width-1)
+            bulletX = 2
 
-        if (tankX<=0)
+        if (tankX <= 0)
             tankX = wnd.width-1
 
-        if (bulletX<=1)
+        if (bulletX <= 1)
             bulletX = wnd.width-1
 
         bulletY -= bulletSpeed
@@ -99,10 +94,10 @@ fun main () {
         gc.drawRect(blockX, blockY,40,20, fill = true)
         blockY += blockSpeed + 10
 
-        if(blockY<=5) {
+        if(blockY <= 5) {
             blockY = 20
             blockX = Random.nextInt(8, 500)
-            blockSpeed =  + 1
+            blockSpeed += 1
         }
 
         //Tank 1
@@ -125,7 +120,12 @@ fun main () {
         //SCORE BOARD
         gc.drawText(20,300,"Score: $score")
 
-        if (blockX-35<=bulletX && blockY+35>=bulletX && blockY-20<=bulletY && blockY+20>=bulletY){
+        if (
+            blockX + 40 <= bulletX &&
+            blockY - 40 >= bulletX &&
+            blockY - 20 <= bulletY &&
+            blockY + 20 >= bulletY
+        ) {
             score += 1
             blockY = -10
         }
