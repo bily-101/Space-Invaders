@@ -12,7 +12,7 @@ import kotlin.random.Random
 
 fun main () {
     // The Window
-    var wnd = Window(1000, 700, buffered = true, background = Pal16.blue)
+    val wnd = Window(1000, 700, buffered = true, background = Pal16.blue)
     // The Keyboard Variable
     val keyboard = Keyboard(wnd)
     //enemy block X and Y
@@ -121,10 +121,10 @@ fun main () {
         gc.drawText(20,300,"Score: $score")
 
         if (
-            blockX - 40 <= bulletX &&
-            blockY + 40 >= bulletX &&
-            blockY - 20 <= bulletY &&
-            blockY + 20 >= bulletY
+            blockX - 20 <= bulletX &&
+            blockY + 20 >= bulletX &&
+            blockY - 10 <= bulletY &&
+            blockY + 10 >= bulletY
         ) {
             score += 1
             blockY = -10
