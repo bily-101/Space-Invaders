@@ -29,7 +29,7 @@ fun main () {
     var blockSpeed = 0
     var score = 0
 
-    while (true) {
+    loop@ while (true) {
         val gc = Graphics(wnd)
         gc.clear()
         gc.color = Pal16[color]
@@ -73,6 +73,10 @@ fun main () {
                     bulletY = tankY
                     bulletSpeed = 0
                     stop = false
+                }
+                'G'.toInt() -> {
+                    continue@loop
+                    blockY = 0
                 }
             }
         }
@@ -121,10 +125,10 @@ fun main () {
         gc.drawText(20,300,"Score: $score")
 
         if (
-            blockX - 15 <= bulletX &&
-            blockY + 15 >= bulletX &&
-            blockY - 10 <= bulletY &&
-            blockY + 10 >= bulletY
+            blockX - 20 <= bulletX &&
+            blockX + 20 >= bulletX &&
+            blockY - 15 <= bulletY &&
+            blockY + 15 >= bulletY
         ) {
             score += 1
             blockY = -10
