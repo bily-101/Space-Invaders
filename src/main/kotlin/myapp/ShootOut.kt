@@ -2,7 +2,7 @@ package myapp
 import com.anysolo.toyGraphics.*
 import kotlin.random.Random
 
-/*
+/*f
 * Author: bily 2019
 * Left key to go left
 * right key to go right
