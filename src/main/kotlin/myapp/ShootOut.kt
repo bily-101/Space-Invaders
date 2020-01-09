@@ -12,6 +12,7 @@ import kotlin.random.Random
 
 fun main () {
     val wnd = Window(1000, 700, buffered = true, background = Pal16.blue)
+
     val keyboard = Keyboard(wnd)
 
     var enemyBlockX =  Random.nextInt(30, 500)
@@ -120,6 +121,7 @@ fun main () {
         }
 
         // Score board
+        gc.color = Pal16.white
         gc.drawText(20,300,"Score: $score")
 
         if (
