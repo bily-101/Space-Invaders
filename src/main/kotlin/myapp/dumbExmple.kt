@@ -72,7 +72,7 @@ fun main () {
 
         var score = 0
 
-        //CONDITION FOR HITTING BULLET
+        //CONDITION FOR HITTING BULLET l
 
 
         if (
