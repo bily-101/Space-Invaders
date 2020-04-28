@@ -37,8 +37,7 @@ fun main () {
 
     while (true) {
 
-
-
+        invaderBullet.x = spaceInvader.x
         val key = keyboard.getPressedKey()
         if (key != null) {
             when (key.code) {
