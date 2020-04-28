@@ -143,7 +143,7 @@ fun main () {
 
         //bullet
 
-        needed1(wnd)
+
 
         //bullet stop when reaches the top
         if (bullet.y<=20) {

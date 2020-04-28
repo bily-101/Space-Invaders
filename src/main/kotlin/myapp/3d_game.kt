@@ -8,12 +8,7 @@ import com.anysolo.toyGraphics.sleep
 fun main () {
     var nok = false
 
-    print("Your username:")
-    var username = readLine()
 
-
-    print("Difficulty(Hard, medium, easy):")
-    var difficulty = readLine()
     val wnd = Window(10, 10, Pal16.white, buffered = true)
     while (true) {
 
